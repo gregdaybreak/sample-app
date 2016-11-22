@@ -1,5 +1,5 @@
 node {
-  def project = 'loot-crate-jenkins-147823'
+  def project = 'lootcrate-production'
   def appName = 'gceme'
   def feSvcName = "${appName}-frontend"
   def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
