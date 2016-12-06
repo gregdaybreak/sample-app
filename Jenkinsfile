@@ -57,6 +57,7 @@ node {
     // Success or failure, always send notifications
     notifyBuild(currentBuild.result)
   }
+}
 
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
