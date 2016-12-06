@@ -10,14 +10,7 @@ node {
   try {
   notifyBuild('STARTED')
   sh("docker build -t ${imageTag} .")
-  } catch (e) {
-    // If there was an exception thrown, the build failed
-    currentBuild.result = "FAILED"
-    throw e
-  } finally {
-    // Success or failure, always send notifications
-    notifyBuild(currentBuild.result)
-  }
+  
   stage 'Run Go tests'
   sh("docker run ${imageTag} go test")
 
@@ -56,7 +49,14 @@ node {
         echo 'To access your environment run `kubectl proxy`'
         echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/${feSvcName}:80/"
   }
-}
+  } catch (e) {
+    // If there was an exception thrown, the build failed
+    currentBuild.result = "FAILED"
+    throw e
+  } finally {
+    // Success or failure, always send notifications
+    notifyBuild(currentBuild.result)
+  }
 
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
