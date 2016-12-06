@@ -12,6 +12,7 @@ node {
   sh("docker build -t ${imageTag} .")
   sh("env")
   
+
   stage 'Run Go tests'
   sh("docker run ${imageTag} go test")
 
